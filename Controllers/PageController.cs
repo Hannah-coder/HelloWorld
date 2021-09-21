@@ -33,7 +33,7 @@ namespace API.Controllers
         public IEnumerable<Page> GetPages()
         {
             var pages = _context.Page.ToList();
-
+            
             return pages;
         }
 
@@ -54,6 +54,22 @@ namespace API.Controllers
         }
 
         /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="url"></param>
+        /// <returns>Page if found</returns>
+        [HttpGet("{page_url}")]
+        public ActionResult<Page> GetPage(string url)
+        {
+            Page page = _context.Page.Where(x => x.Page_Url == url).SingleOrDefault();
+
+            if (page == null)
+                return NotFound();
+
+            return page;
+        }
+
+        /// <summary>
         /// Creates the page.
         /// </summary>
         /// <param name="page">The page.</param>
@@ -62,7 +78,7 @@ namespace API.Controllers
         public Page CreatePage(Page page)
         {
             _context.Page.Add(page);
-            _context.SaveChanges();
+            _context.SaveChangesAsync();
 
             return page;
         }
@@ -71,7 +87,7 @@ namespace API.Controllers
         /// Deletes the page.
         /// </summary>
         /// <param name="id">The identifier.</param>
-        /// <returns></returns>
+        /// <returns>Page deleted if found</returns>
         [HttpDelete("{id}")]
         public ActionResult<Page> DeletePage(int id)
         {
@@ -81,7 +97,27 @@ namespace API.Controllers
                 return NotFound();
 
             _context.Page.Remove(page);
-            _context.SaveChanges();
+            _context.SaveChangesAsync();
+
+            return page;
+            //return CreatedAtAction(nameof(_context.Page.Remove), new { id = page.Id });
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="url"></param>
+        /// <returns>Page deleted if found</returns>
+        [HttpDelete("{page_url}")]
+        public ActionResult<Page> DeletePage(string url)
+        {
+            Page page = _context.Page.Where(x => x.Page_Url == url).SingleOrDefault();
+
+            if (page == null)
+                return NotFound();
+
+            _context.Page.Remove(page);
+            _context.SaveChangesAsync();
 
             return page;
             //return CreatedAtAction(nameof(_context.Page.Remove), new { id = page.Id });
