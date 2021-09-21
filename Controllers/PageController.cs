@@ -59,11 +59,12 @@ namespace API.Controllers
         /// <param name="page">The page.</param>
         /// <returns></returns>
         [HttpPost]
-        public ActionResult<Page> CreatePage(Page page)
+        public Page CreatePage(Page page)
         {
             _context.Page.Add(page);
+            _context.SaveChanges();
 
-            return CreatedAtAction(nameof(_context.Page.Add), new { id = page.Id });
+            return page;
         }
 
         /// <summary>
@@ -80,8 +81,10 @@ namespace API.Controllers
                 return NotFound();
 
             _context.Page.Remove(page);
+            _context.SaveChanges();
 
-            return CreatedAtAction(nameof(_context.Page.Remove), new { id = page.Id });
+            return page;
+            //return CreatedAtAction(nameof(_context.Page.Remove), new { id = page.Id });
         }
     }
 }

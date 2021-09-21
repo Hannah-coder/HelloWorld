@@ -8,6 +8,6 @@ namespace API.Models
     public record Page
     {
         public int Id { get; init; }
-        public string PageUrl { get; init; }
+        public string Page_Url { get; init; }
     }
 }

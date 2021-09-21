@@ -70,8 +70,10 @@ namespace API.Controllers
         public ActionResult<Session> CreateSession(Session session)
         {
             _context.Session.Add(session);
+            _context.SaveChangesAsync();
 
-            return CreatedAtAction(nameof(_context.Session.Add), new { id = session.Id });
+            return session;
+            //return CreatedAtAction(nameof(_context.Session.Add), new { id = session.Id });
         }
 
         // DELETE api/<APIController>/5        
@@ -89,8 +91,10 @@ namespace API.Controllers
                 return NotFound();
 
             _context.Session.Remove(session);
-            
-            return CreatedAtAction(nameof(_context.Session.Remove), new { id = session.Id });
+            _context.SaveChangesAsync();
+
+            return session;
+            //return CreatedAtAction(nameof(_context.Session.Remove), new { id = session.Id });
         }
 
 

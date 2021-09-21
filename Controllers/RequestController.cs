@@ -63,8 +63,10 @@ namespace API.Controllers
         public ActionResult<Request> CreateRequest(Request request)
         {
             _context.Request.Add(request);
+            _context.SaveChangesAsync();
 
-            return CreatedAtAction(nameof(_context.Request.Add), new { id = request.Id });
+            return request;
+            //return CreatedAtAction(nameof(_context.Request.Add), new { id = request.Id });
         }
 
         /// <summary>
@@ -81,8 +83,10 @@ namespace API.Controllers
                 return NotFound();
 
             _context.Request.Remove(request);
+            _context.SaveChangesAsync();
 
-            return CreatedAtAction(nameof(_context.Request.Remove), new { id = request.Id });
+            return request;
+            //return CreatedAtAction(nameof(_context.Request.Remove), new { id = request.Id });
         }
     }
 }

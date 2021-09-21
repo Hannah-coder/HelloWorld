@@ -63,8 +63,10 @@ namespace API.Controllers
         public ActionResult<PageSession> CreatePageSession(PageSession session)
         {
             _context.PageSession.Add(session);
+            _context.SaveChangesAsync();
 
-            return CreatedAtAction(nameof(_context.PageSession.Add), new { id = session.Id });
+            return session;
+            //return CreatedAtAction(nameof(_context.PageSession.Add), new { id = session.Id });
         }
 
         /// <summary>
@@ -81,8 +83,10 @@ namespace API.Controllers
                 return NotFound();
 
             _context.PageSession.Remove(session);
+            _context.SaveChangesAsync();
 
-            return CreatedAtAction(nameof(_context.PageSession.Remove), new { id = session.Id });
+            return session;
+            //return CreatedAtAction(nameof(_context.PageSession.Remove), new { id = session.Id });
         }
     }
 }
