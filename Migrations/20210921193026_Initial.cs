@@ -22,23 +22,6 @@ namespace API.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "PageSession",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
-                    SessionId = table.Column<int>(type: "int", nullable: false),
-                    PageId = table.Column<int>(type: "int", nullable: false),
-                    Start_Time = table.Column<DateTimeOffset>(type: "timestamp", nullable: false),
-                    End_Time = table.Column<DateTimeOffset>(type: "timestamp", nullable: false),
-                    PageLoadTime = table.Column<decimal>(type: "decimal(18, 2)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_PageSession", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Request",
                 columns: table => new
                 {
@@ -65,18 +48,57 @@ namespace API.Migrations
                 {
                     table.PrimaryKey("PK_Session", x => x.Id);
                 });
+
+            migrationBuilder.CreateTable(
+                name: "PageSession",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
+                    Start_Time = table.Column<DateTimeOffset>(type: "timestamp", nullable: false),
+                    End_Time = table.Column<DateTimeOffset>(type: "timestamp", nullable: false),
+                    PageLoadTime = table.Column<decimal>(type: "decimal(18, 2)", nullable: false),
+                    SessionId = table.Column<int>(type: "int", nullable: false),
+                    PageId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PageSession", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_PageSession_Page_PageId",
+                        column: x => x.PageId,
+                        principalTable: "Page",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_PageSession_Session_SessionId",
+                        column: x => x.SessionId,
+                        principalTable: "Session",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PageSession_PageId",
+                table: "PageSession",
+                column: "PageId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PageSession_SessionId",
+                table: "PageSession",
+                column: "SessionId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Page");
-
-            migrationBuilder.DropTable(
                 name: "PageSession");
 
             migrationBuilder.DropTable(
                 name: "Request");
+
+            migrationBuilder.DropTable(
+                name: "Page");
 
             migrationBuilder.DropTable(
                 name: "Session");

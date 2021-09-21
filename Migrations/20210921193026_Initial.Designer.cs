@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace API.Migrations
 {
     [DbContext(typeof(MetricsDbContext))]
-    [Migration("20210921022142_Initial")]
+    [Migration("20210921193026_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -56,6 +56,10 @@ namespace API.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("PageId");
+
+                    b.HasIndex("SessionId");
+
                     b.ToTable("PageSession");
                 });
 
@@ -91,6 +95,25 @@ namespace API.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Session");
+                });
+
+            modelBuilder.Entity("API.Models.PageSession", b =>
+                {
+                    b.HasOne("API.Models.Page", "Page")
+                        .WithMany()
+                        .HasForeignKey("PageId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("API.Models.Session", "Session")
+                        .WithMany()
+                        .HasForeignKey("SessionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Page");
+
+                    b.Navigation("Session");
                 });
 #pragma warning restore 612, 618
         }
