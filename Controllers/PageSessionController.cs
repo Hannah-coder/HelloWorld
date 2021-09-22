@@ -43,13 +43,13 @@ namespace API.Controllers
         /// </summary>
         /// <param name="pageId"></param>
         /// <returns>List of Seesions of page</returns>
-        [HttpGet("{pageid}")]
-        public IEnumerable<PageSession> GetPageSessions(int pageId)
-        {
-            var pageSessions = _context.PageSession.ToList().Where(x => x.PageId == pageId);
+        //[HttpGet("{pageid}")]
+        //public IEnumerable<PageSession> GetPageSessions(int pageId)
+        //{
+            //var pageSessions = _context.PageSession.ToList().Where(x => x.PageId == pageId);
 
-            return pageSessions;
-        }
+            //return pageSessions;
+        //}
 
         /// <summary>
         /// Gets the page session.
@@ -107,19 +107,19 @@ namespace API.Controllers
         /// </summary>
         /// <param name="pageId"></param>
         /// <returns>List of pages sessions removed</returns>
-        [HttpDelete("{pageid}")]
-        public IEnumerable<PageSession> DeletePagesSession(int pageId)
-        {
-            var session = _context.PageSession.ToList().Where(x => x.PageId == pageId);
+        //[HttpDelete("{pageid}")]
+        //public IEnumerable<PageSession> DeletePagesSession(int pageId)
+        //{
+            //var session = _context.PageSession.ToList().Where(x => x.PageId == pageId);
 
             //if (session == null)
                 //return NotFound();
 
-            _context.PageSession.RemoveRange(session);
-            _context.SaveChangesAsync();
+            //_context.PageSession.RemoveRange(session);
+            //_context.SaveChangesAsync();
 
-            return session;
+            //return session;
             //return CreatedAtAction(nameof(_context.PageSession.Remove), new { id = session.Id });
-        }
+        //}
     }
 }
