@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace API.Migrations
 {
     [DbContext(typeof(MetricsDbContext))]
-    [Migration("20211004195001_1.0")]
-    partial class _10
+    [Migration("20210921193026_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -18,23 +18,6 @@ namespace API.Migrations
             modelBuilder
                 .HasAnnotation("Relational:MaxIdentifierLength", 64)
                 .HasAnnotation("ProductVersion", "5.0.10");
-
-            modelBuilder.Entity("API.Models.MerchandiseFilter", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    b.Property<string>("Category")
-                        .HasColumnType("text");
-
-                    b.Property<DateTimeOffset>("Time")
-                        .HasColumnType("timestamp");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("MerchandiseFilter");
-                });
 
             modelBuilder.Entity("API.Models.Page", b =>
                 {
@@ -80,23 +63,6 @@ namespace API.Migrations
                     b.ToTable("PageSession");
                 });
 
-            modelBuilder.Entity("API.Models.PetFilter", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    b.Property<string>("Category")
-                        .HasColumnType("text");
-
-                    b.Property<DateTimeOffset>("Time")
-                        .HasColumnType("timestamp");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("PetFilter");
-                });
-
             modelBuilder.Entity("API.Models.Request", b =>
                 {
                     b.Property<int>("Id")
@@ -133,31 +99,21 @@ namespace API.Migrations
 
             modelBuilder.Entity("API.Models.PageSession", b =>
                 {
-                    b.HasOne("API.Models.Page", "page")
-                        .WithMany("PageSessions")
+                    b.HasOne("API.Models.Page", "Page")
+                        .WithMany()
                         .HasForeignKey("PageId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("API.Models.Session", "Session")
-                        .WithMany("PageSessions")
+                        .WithMany()
                         .HasForeignKey("SessionId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("page");
+                    b.Navigation("Page");
 
                     b.Navigation("Session");
-                });
-
-            modelBuilder.Entity("API.Models.Page", b =>
-                {
-                    b.Navigation("PageSessions");
-                });
-
-            modelBuilder.Entity("API.Models.Session", b =>
-                {
-                    b.Navigation("PageSessions");
                 });
 #pragma warning restore 612, 618
         }

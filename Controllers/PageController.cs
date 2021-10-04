@@ -119,8 +119,8 @@ namespace API.Controllers
             _context.Page.Remove(page);
             _context.SaveChangesAsync();
 
-            return page;
+            //return page;
             //return CreatedAtAction(nameof(_context.Page.Remove), new { id = page.Id });
-        }
+        //}
     }
 }

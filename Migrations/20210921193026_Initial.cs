@@ -4,49 +4,21 @@ using MySql.EntityFrameworkCore.Metadata;
 
 namespace API.Migrations
 {
-    public partial class _10 : Migration
+    public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.CreateTable(
-                name: "MerchandiseFilter",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
-                    Category = table.Column<string>(type: "text", nullable: true),
-                    Time = table.Column<DateTimeOffset>(type: "timestamp", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_MerchandiseFilter", x => x.Id);
-                });
-
             migrationBuilder.CreateTable(
                 name: "Page",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
-                    Page_Url = table.Column<string>(type: "text", nullable: false)
+                    Page_Url = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Page", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "PetFilter",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
-                    Category = table.Column<string>(type: "text", nullable: false),
-                    Time = table.Column<DateTimeOffset>(type: "timestamp", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_PetFilter", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -120,13 +92,7 @@ namespace API.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "MerchandiseFilter");
-
-            migrationBuilder.DropTable(
                 name: "PageSession");
-
-            migrationBuilder.DropTable(
-                name: "PetFilter");
 
             migrationBuilder.DropTable(
                 name: "Request");
