@@ -45,7 +45,7 @@ namespace API.Controllers
         [HttpGet("{id}")]
         public ActionResult<Page> GetPage(int id)
         {
-            Page page = _context.Page.Where(x => x.Id == id).SingleOrDefault();
+            Page page = _context.Page.Single(x => x.Id == id);
 
             if (page == null)
                 return NotFound();
@@ -111,7 +111,7 @@ namespace API.Controllers
         [HttpDelete("{page_url}")]
         public ActionResult<Page> DeletePage(string url)
         {
-            Page page = _context.Page.Where(x => x.Page_Url == url).SingleOrDefault();
+            var page = _context.Page.Single(x => x.Page_Url == url);
 
             if (page == null)
                 return NotFound();
