@@ -43,7 +43,7 @@ namespace API.Controllers
         /// </summary>
         /// <param name="pageId"></param>
         /// <returns>List of Seesions of page</returns>
-        [HttpGet("{pageid}")]
+        [HttpGet("ByPage/{pageId}")]
         public IEnumerable<PageSession> GetPageSessions(int pageId)
         {
             var pageSessions = _context.PageSession.ToList().Where(x => x.PageId == pageId);
@@ -90,7 +90,7 @@ namespace API.Controllers
         [HttpDelete("{id}")]
         public ActionResult<PageSession> DeletePageSession(int id)
         {
-            PageSession session = _context.PageSession.Where(x => x.Id == id).SingleOrDefault();
+            PageSession session = _context.PageSession.Single(x => x.Id == id);
 
             if (session == null)
                 return NotFound();
@@ -107,15 +107,16 @@ namespace API.Controllers
         /// </summary>
         /// <param name="pageId"></param>
         /// <returns>List of pages sessions removed</returns>
-        [HttpDelete("{pageid}")]
+        [HttpDelete("DeleteBy/{pageId}")]
         public IEnumerable<PageSession> DeletePagesSession(int pageId)
         {
             var session = _context.PageSession.ToList().Where(x => x.PageId == pageId);
 
             //if (session == null)
                 //return NotFound();
-
-            _context.PageSession.RemoveRange(session);
+            foreach(var page in session)
+                _context.PageSession.Remove(page);
+            
             _context.SaveChangesAsync();
 
             return session;

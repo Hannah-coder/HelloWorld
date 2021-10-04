@@ -41,7 +41,7 @@ namespace API.Controllers
             return item;
         }
 
-        [HttpGet("{category}")]
+        [HttpGet("ByCategory/{category}")]
         public IEnumerable<MerchandiseFilter> GetCategory(string category)
         {
             var merchandise = _context.MerchandiseFilter.ToList().Where(x => x.Category == category);
@@ -73,7 +73,7 @@ namespace API.Controllers
             //return CreatedAtAction(nameof(_context.Page.Remove), new { id = page.Id });
         }
 
-        [HttpGet("{month}")]
+        [HttpGet("ByMonth/{month}")]
         public IEnumerable<MerchandiseFilter> GetMerchandiseByMonth(int month) 
         {
             var merchandise = _context.MerchandiseFilter.ToList().Where(x => x.Time.Month == month);

@@ -30,7 +30,7 @@ namespace API.Controllers
             return pets;
         }
         
-        [HttpGet("{id}")]
+        [HttpGet("single/{id}")]
         public ActionResult<PetFilter> GetPet(int id)
         {
             var pet = _context.PetFilter.Single(x => x.Id == id);
@@ -41,7 +41,7 @@ namespace API.Controllers
             return pet;
         }
 
-        [HttpGet("{category}")]
+        [HttpGet("ByCategory/{category}")]
         public IEnumerable<PetFilter> GetCategory(string category)
         {
             var pets = _context.PetFilter.ToList().Where(x => x.Category == category);
@@ -73,7 +73,7 @@ namespace API.Controllers
             //return CreatedAtAction(nameof(_context.Page.Remove), new { id = page.Id });
         }
 
-        [HttpGet("{month}")]
+        [HttpGet("ByMonth/{month}")]
         public IEnumerable<PetFilter> GetPetsByMonth(int month)
         {
             var pets = _context.PetFilter.ToList().Where(x => x.Time.Month == month);

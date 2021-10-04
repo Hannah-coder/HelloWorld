@@ -42,7 +42,7 @@ namespace API.Controllers
         /// </summary>
         /// <param name="id">The identifier.</param>
         /// <returns>Page if found</returns>
-        [HttpGet("{id}")]
+        [HttpGet("single/{id}")]
         public ActionResult<Page> GetPage(int id)
         {
             Page page = _context.Page.Single(x => x.Id == id);
@@ -61,7 +61,7 @@ namespace API.Controllers
         [HttpGet("{page_url}")]
         public ActionResult<Page> GetPage(string url)
         {
-            Page page = _context.Page.Where(x => x.Page_Url == url).SingleOrDefault();
+            Page page = _context.Page.Single(x => x.Page_Url == url);
 
             if (page == null)
                 return NotFound();
@@ -88,7 +88,7 @@ namespace API.Controllers
         /// </summary>
         /// <param name="id">The identifier.</param>
         /// <returns>Page deleted if found</returns>
-        [HttpDelete("{id}")]
+        [HttpDelete("Single/{id}")]
         public ActionResult<Page> DeletePage(int id)
         {
             Page page = _context.Page.Where(x => x.Id == id).SingleOrDefault();
@@ -114,7 +114,7 @@ namespace API.Controllers
             var page = _context.Page.Single(x => x.Page_Url == url);
 
             if (page == null)
-                return NotFound();
+                //return NotFound();
 
             _context.Page.Remove(page);
             _context.SaveChangesAsync();
