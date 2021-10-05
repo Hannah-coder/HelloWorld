@@ -19,5 +19,7 @@ namespace API.Models
         public DbSet<Request> Request { get; set; }
         public DbSet<PageView> PageView { get; set; }
         public DbSet<ServerInformation> ServerInformation { get; set; }
+        public DbSet<PetFilter> PetFilter { get; set; }
+        public DbSet<MerchandiseFilter> MerchandiseFilter { get; set; }
     }
 }
