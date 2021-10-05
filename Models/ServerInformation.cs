@@ -4,10 +4,10 @@ namespace API.Models
 {
     public record ServerInformation
     {
-        public int Id { get; set; }
-        public TimeSpan UpTime { get; set; }
-        public string RuntimeVersion { get; set; }
-        public string OSVersion { get; set; }
-        public DateTime DateAndTime { get; set; }
+        public int Id { get; init; }
+        public TimeSpan UpTime { get; init; }
+        public string RuntimeVersion { get; init; }
+        public string OSVersion { get; init; }
+        public DateTime DateAndTime { get; init; }
     }
 }
