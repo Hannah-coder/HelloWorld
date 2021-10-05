@@ -13,7 +13,7 @@ namespace API.Models
         public Decimal PageLoadTime { get; init; }
         public Session Session { get; set; }
         public int SessionId { get; init; }
-        public Page page { get; set; }
+        public Page Page { get; set; }
         public int PageId { get; init; }
     }
 }

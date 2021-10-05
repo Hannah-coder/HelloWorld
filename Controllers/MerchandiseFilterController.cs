@@ -16,12 +16,21 @@ namespace API.Controllers
         private readonly ILogger<MerchandiseFilterController> _logger;
         private readonly MetricsDbContext _context;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="MerchandiseFilterController"/> class.
+        /// </summary>
+        /// <param name="logger">The logger.</param>
+        /// <param name="context">The context.</param>
         public MerchandiseFilterController(ILogger<MerchandiseFilterController> logger, MetricsDbContext context)
         {
             _logger = logger;
             _context = context;
         }
 
+        /// <summary>
+        /// Gets a list of merchandise searched.
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public IEnumerable<MerchandiseFilter> GetMerchandise()
         {
@@ -30,6 +39,11 @@ namespace API.Controllers
             return merchandise;
         }
 
+        /// <summary>
+        /// Gets the item.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <returns></returns>
         [HttpGet("{id}")]
         public ActionResult<MerchandiseFilter> GetItem(int id)
         {
@@ -41,6 +55,11 @@ namespace API.Controllers
             return item;
         }
 
+        /// <summary>
+        /// Gets the category.
+        /// </summary>
+        /// <param name="category">The category.</param>
+        /// <returns></returns>
         [HttpGet("ByCategory/{category}")]
         public IEnumerable<MerchandiseFilter> GetCategory(string category)
         {
@@ -49,6 +68,11 @@ namespace API.Controllers
             return merchandise;
         }
 
+        /// <summary>
+        /// Adds the item.
+        /// </summary>
+        /// <param name="item">The item.</param>
+        /// <returns></returns>
         [HttpPost]
         public MerchandiseFilter AddItem(MerchandiseFilter item)
         {
@@ -58,6 +82,11 @@ namespace API.Controllers
             return item;
         }
 
+        /// <summary>
+        /// Deletes the item.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <returns></returns>
         [HttpDelete("{id}")]
         public ActionResult<MerchandiseFilter> DeleteItem(int id)
         {
@@ -73,6 +102,11 @@ namespace API.Controllers
             //return CreatedAtAction(nameof(_context.Page.Remove), new { id = page.Id });
         }
 
+        /// <summary>
+        /// Gets the merchandise by month.
+        /// </summary>
+        /// <param name="month">The month.</param>
+        /// <returns></returns>
         [HttpGet("ByMonth/{month}")]
         public IEnumerable<MerchandiseFilter> GetMerchandiseByMonth(int month) 
         {

@@ -91,7 +91,7 @@ namespace API.Controllers
         [HttpDelete("Single/{id}")]
         public ActionResult<Page> DeletePage(int id)
         {
-            Page page = _context.Page.Where(x => x.Id == id).SingleOrDefault();
+            Page page = _context.Page.Single(x => x.Id == id);
 
             if (page == null)
                 return NotFound();

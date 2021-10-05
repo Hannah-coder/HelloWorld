@@ -1,5 +1,6 @@
 ﻿using API.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -33,7 +34,7 @@ namespace API.Controllers
         [HttpGet]
         public IEnumerable<PageSession> GetPageSessions()
         {
-            var pageSessions = _context.PageSession.ToList();
+            var pageSessions = _context.PageSession.Include(x => x.Session).Include(x => x.Page).ToList();
 
             return pageSessions;
         }
@@ -59,7 +60,7 @@ namespace API.Controllers
         [HttpGet("{id}")]
         public ActionResult<PageSession> GetPageSession(int id)
         {
-            PageSession session = _context.PageSession.Where(x => x.Id == id).SingleOrDefault();
+            PageSession session = _context.PageSession.Single(x => x.Id == id);
 
             if (session == null)
                 return NotFound();
@@ -113,7 +114,8 @@ namespace API.Controllers
             var session = _context.PageSession.ToList().Where(x => x.PageId == pageId);
 
             //if (session == null)
-                //return NotFound();
+               //return NotFound();
+            
             foreach(var page in session)
                 _context.PageSession.Remove(page);
             

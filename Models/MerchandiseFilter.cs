@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 
 namespace API.Models
 {
+
     public class MerchandiseFilter
     {
         public int Id { get; set; }

@@ -10,5 +10,6 @@ namespace API.Models
         public int Id { get; set; }
         public string Category { get; set; }
         public DateTimeOffset Time { get; set; }
+        //public int Count { get; set; }
     }
 }
