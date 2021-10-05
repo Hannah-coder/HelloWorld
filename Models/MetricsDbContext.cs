@@ -17,5 +17,6 @@ namespace API.Models
         public DbSet<Page> Page { get; set; }
         public DbSet<PageSession> PageSession { get; set; }
         public DbSet<Request> Request { get; set; }
+        public DbSet<PageView> PageView { get; set; }
     }
 }
