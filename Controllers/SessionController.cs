@@ -52,7 +52,7 @@ namespace API.Controllers
         [HttpGet("{id}")]
         public ActionResult<Session> GetSession(int id)
         {
-            Session session = _context.Session.Where(x => x.Id == id).SingleOrDefault();
+            Session session = _context.Session.Single(x => x.Id == id);
 
             if (session == null)
                 return NotFound();
@@ -85,7 +85,7 @@ namespace API.Controllers
         [HttpDelete("{id}")]
         public ActionResult<Session> DeleteSession(int id)
         {
-            Session session = _context.Session.Where(x => x.Id == id).SingleOrDefault();
+            Session session = _context.Session.Single(x => x.Id == id);
 
             if (session == null)
                 return NotFound();

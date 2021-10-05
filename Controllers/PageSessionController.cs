@@ -1,5 +1,6 @@
 ﻿using API.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -33,7 +34,7 @@ namespace API.Controllers
         [HttpGet]
         public IEnumerable<PageSession> GetPageSessions()
         {
-            var pageSessions = _context.PageSession.ToList();
+            var pageSessions = _context.PageSession.Include(x => x.Session).Include(x => x.Page).ToList();
 
             return pageSessions;
         }
@@ -43,13 +44,13 @@ namespace API.Controllers
         /// </summary>
         /// <param name="pageId"></param>
         /// <returns>List of Seesions of page</returns>
-        //[HttpGet("{pageid}")]
-        //public IEnumerable<PageSession> GetPageSessions(int pageId)
-        //{
-            //var pageSessions = _context.PageSession.ToList().Where(x => x.PageId == pageId);
+        [HttpGet("ByPage/{pageId}")]
+        public IEnumerable<PageSession> GetPageSessions(int pageId)
+        {
+            var pageSessions = _context.PageSession.ToList().Where(x => x.PageId == pageId);
 
-            //return pageSessions;
-        //}
+            return pageSessions;
+        }
 
         /// <summary>
         /// Gets the page session.
@@ -59,7 +60,7 @@ namespace API.Controllers
         [HttpGet("{id}")]
         public ActionResult<PageSession> GetPageSession(int id)
         {
-            PageSession session = _context.PageSession.Where(x => x.Id == id).SingleOrDefault();
+            PageSession session = _context.PageSession.Single(x => x.Id == id);
 
             if (session == null)
                 return NotFound();
@@ -90,7 +91,7 @@ namespace API.Controllers
         [HttpDelete("{id}")]
         public ActionResult<PageSession> DeletePageSession(int id)
         {
-            PageSession session = _context.PageSession.Where(x => x.Id == id).SingleOrDefault();
+            PageSession session = _context.PageSession.Single(x => x.Id == id);
 
             if (session == null)
                 return NotFound();
@@ -107,19 +108,21 @@ namespace API.Controllers
         /// </summary>
         /// <param name="pageId"></param>
         /// <returns>List of pages sessions removed</returns>
-        //[HttpDelete("{pageid}")]
-        //public IEnumerable<PageSession> DeletePagesSession(int pageId)
-        //{
-            //var session = _context.PageSession.ToList().Where(x => x.PageId == pageId);
+        [HttpDelete("DeleteBy/{pageId}")]
+        public IEnumerable<PageSession> DeletePagesSession(int pageId)
+        {
+            var session = _context.PageSession.ToList().Where(x => x.PageId == pageId);
 
             //if (session == null)
-                //return NotFound();
+               //return NotFound();
+            
+            foreach(var page in session)
+                _context.PageSession.Remove(page);
+            
+            _context.SaveChangesAsync();
 
-            //_context.PageSession.RemoveRange(session);
-            //_context.SaveChangesAsync();
-
-            //return session;
+            return session;
             //return CreatedAtAction(nameof(_context.PageSession.Remove), new { id = session.Id });
-        //}
+        }
     }
 }

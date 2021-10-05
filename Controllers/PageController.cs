@@ -42,10 +42,10 @@ namespace API.Controllers
         /// </summary>
         /// <param name="id">The identifier.</param>
         /// <returns>Page if found</returns>
-        [HttpGet("{id}")]
+        [HttpGet("single/{id}")]
         public ActionResult<Page> GetPage(int id)
         {
-            Page page = _context.Page.Where(x => x.Id == id).SingleOrDefault();
+            Page page = _context.Page.Single(x => x.Id == id);
 
             if (page == null)
                 return NotFound();
@@ -58,16 +58,16 @@ namespace API.Controllers
         /// </summary>
         /// <param name="url"></param>
         /// <returns>Page if found</returns>
-        //[HttpGet("{page_url}")]
-        //public ActionResult<Page> GetPage(string url)
-        //{
-            //Page page = _context.Page.Where(x => x.Page_Url == url).SingleOrDefault();
+        [HttpGet("{page_url}")]
+        public ActionResult<Page> GetPage(string url)
+        {
+            Page page = _context.Page.Single(x => x.Page_Url == url);
 
-            //if (page == null)
-                //return NotFound();
+            if (page == null)
+                return NotFound();
 
-            //return page;
-        //}
+            return page;
+        }
 
         /// <summary>
         /// Creates the page.
@@ -88,10 +88,10 @@ namespace API.Controllers
         /// </summary>
         /// <param name="id">The identifier.</param>
         /// <returns>Page deleted if found</returns>
-        [HttpDelete("{id}")]
+        [HttpDelete("Single/{id}")]
         public ActionResult<Page> DeletePage(int id)
         {
-            Page page = _context.Page.Where(x => x.Id == id).SingleOrDefault();
+            Page page = _context.Page.Single(x => x.Id == id);
 
             if (page == null)
                 return NotFound();
@@ -108,19 +108,19 @@ namespace API.Controllers
         /// </summary>
         /// <param name="url"></param>
         /// <returns>Page deleted if found</returns>
-        //[HttpDelete("{url:string}")]
-        //public ActionResult<Page> DeletePage(string url)
-        //{
-            //Page page = _context.Page.Where(x => x.Page_Url == url).SingleOrDefault();
+        [HttpDelete("{page_url}")]
+        public ActionResult<Page> DeletePage(string url)
+        {
+            var page = _context.Page.Single(x => x.Page_Url == url);
 
-            //if (page == null)
+            if (page == null)
                 //return NotFound();
 
-            //_context.Page.Remove(page);
-            //_context.SaveChangesAsync();
+            _context.Page.Remove(page);
+            _context.SaveChangesAsync();
 
-            //return page;
+            return page;
             //return CreatedAtAction(nameof(_context.Page.Remove), new { id = page.Id });
-        //}
+        }
     }
 }

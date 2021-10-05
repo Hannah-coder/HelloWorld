@@ -46,7 +46,7 @@ namespace API.Controllers
         [HttpGet("{id}")]
         public ActionResult<Request> GetRequest(int id)
         {
-            var request = _context.Request.Where(x => x.Id == id).SingleOrDefault();
+            var request = _context.Request.Single(x => x.Id == id);
 
             if (request == null)
                 return NotFound();
@@ -77,7 +77,7 @@ namespace API.Controllers
         [HttpDelete("{id}")]
         public ActionResult<Request> DeleteRequest(int id)
         {
-            var request = _context.Request.Where(x => x.Id == id).SingleOrDefault();
+            var request = _context.Request.Single(x => x.Id == id);
 
             if (request == null)
                 return NotFound();

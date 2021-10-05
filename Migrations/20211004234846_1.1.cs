@@ -4,10 +4,24 @@ using MySql.EntityFrameworkCore.Metadata;
 
 namespace API.Migrations
 {
-    public partial class Initial : Migration
+    public partial class _11 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.CreateTable(
+                name: "MerchandiseFilter",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
+                    Category = table.Column<string>(type: "text", nullable: true),
+                    Time = table.Column<DateTimeOffset>(type: "timestamp", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_MerchandiseFilter", x => x.Id);
+                });
+
             migrationBuilder.CreateTable(
                 name: "Page",
                 columns: table => new
@@ -19,6 +33,20 @@ namespace API.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Page", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "PetFilter",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
+                    Category = table.Column<string>(type: "text", nullable: true),
+                    Time = table.Column<DateTimeOffset>(type: "timestamp", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PetFilter", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -92,7 +120,13 @@ namespace API.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
+                name: "MerchandiseFilter");
+
+            migrationBuilder.DropTable(
                 name: "PageSession");
+
+            migrationBuilder.DropTable(
+                name: "PetFilter");
 
             migrationBuilder.DropTable(
                 name: "Request");

@@ -11,9 +11,9 @@ namespace API.Models
         public DateTimeOffset Start_Time { get; init; }
         public DateTimeOffset End_Time { get; init; }
         public Decimal PageLoadTime { get; init; }
+        public Session Session { get; set; }
         public int SessionId { get; init; }
-        public virtual Session Session { get; set; }
+        public Page Page { get; set; }
         public int PageId { get; init; }
-        public virtual Page Page { get; set; }
     }
 }
