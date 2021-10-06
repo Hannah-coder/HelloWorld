@@ -16,47 +16,61 @@ namespace API.Controllers
         private readonly ILogger<PageViewController> _logger;
         private readonly MetricsDbContext _context;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="PageViewController"/> class.
+        /// </summary>
+        /// <param name="logger">The logger.</param>
+        /// <param name="context">The context.</param>
         public PageViewController(ILogger<PageViewController> logger, MetricsDbContext context)
         {
             _logger = logger;
             _context = context;
         }
 
+        // GET: api/<PageViewController>
         [HttpGet]
-        public IEnumerable<PageView> GetPets()
+        public IEnumerable<PageView> GetPageViews()
         {
-            var pages = _context.PageView.ToList();
-
-            return pages;
-        }
-
-        [HttpGet("single/{id}")]
-        public ActionResult<PageView> GetPageView(int id)
-        {
-            var page = _context.PageView.Single(x => x.Id == id);
-
-            if (page == null)
-                return NotFound();
-
-            return page;
-        }
-
-        [HttpGet("ByURLSection1/{URLSection1}")]
-        public IEnumerable<PageView> GetPageSessions(string pageURL)
-        {
-            var pageViews = _context.PageView.ToList().Where(x => x.URLSection1 == pageURL);
+            var pageViews = _context.PageView.ToList();
 
             return pageViews;
         }
 
-        [HttpPost]
-        public ActionResult<PageView> CreatePageSession(PageView page)
+        // GET api/<PageViewController>/5
+        [HttpGet("{id}")]
+        public ActionResult<PageView> GetPageView(int id)
         {
-            _context.PageView.Add(page);
+            var pageView = _context.PageView.Where(x => x.Id == id).SingleOrDefault();
+
+            if (pageView == null)
+                return NotFound();
+
+            return pageView;
+        }
+
+        // POST api/<PageViewController>
+        [HttpPost]
+        public ActionResult<PageView> CreatePageView(PageView pageView)
+        {
+            _context.PageView.Add(pageView);
             _context.SaveChangesAsync();
 
-            return page;
-            //return CreatedAtAction(nameof(_context.PageSession.Add), new { id = session.Id });
+            return pageView;
+        }
+
+        // DELETE api/<PageViewController>/5
+        [HttpDelete("{id}")]
+        public ActionResult<PageView> DeletePageView(int id)
+        {
+            var pageView = _context.PageView.Where(x => x.Id == id).SingleOrDefault();
+
+            if (pageView == null)
+                return NotFound();
+
+            _context.PageView.Remove(pageView);
+            _context.SaveChangesAsync();
+
+            return pageView;
         }
     }
 }
