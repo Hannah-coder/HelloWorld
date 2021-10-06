@@ -11,7 +11,7 @@ namespace API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class PageSessionController : Controller
+    public class PageSessionController : ControllerBase
     {
         private readonly ILogger<PageSessionController> _logger;
         private readonly MetricsDbContext _context;

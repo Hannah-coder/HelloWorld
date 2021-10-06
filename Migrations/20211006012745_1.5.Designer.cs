@@ -9,15 +9,15 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace API.Migrations
 {
     [DbContext(typeof(MetricsDbContext))]
-    [Migration("20211005234751_1.2")]
-    partial class _12
+    [Migration("20211006012745_1.5")]
+    partial class _15
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("Relational:MaxIdentifierLength", 64)
-                .HasAnnotation("ProductVersion", "5.0.10");
+                .HasAnnotation("ProductVersion", "5.0.9");
 
             modelBuilder.Entity("API.Models.MerchandiseFilter", b =>
                 {
@@ -28,11 +28,11 @@ namespace API.Migrations
                     b.Property<string>("Category")
                         .HasColumnType("text");
 
+                    b.Property<DateTime>("DateAndTime")
+                        .HasColumnType("datetime");
+
                     b.Property<int>("NumberRecordsReturned")
                         .HasColumnType("int");
-
-                    b.Property<DateTimeOffset>("Time")
-                        .HasColumnType("timestamp");
 
                     b.HasKey("Id");
 
@@ -164,8 +164,8 @@ namespace API.Migrations
                     b.Property<string>("RuntimeVersion")
                         .HasColumnType("text");
 
-                    b.Property<TimeSpan>("Uptime")
-                        .HasColumnType("time");
+                    b.Property<long>("Uptime")
+                        .HasColumnType("bigint");
 
                     b.HasKey("Id");
 

@@ -8,7 +8,7 @@ namespace API.Models
     public record ServerInformation
     {
         public int Id { get; set; }
-        public TimeSpan Uptime { get; set; }
+        public long Uptime { get; set; }
         public string RuntimeVersion { get; set; }
         public string OSVersion { get; set; }
         public DateTime DateAndTime { get; set; }

@@ -74,11 +74,14 @@ namespace API.Controllers
         /// <param name="item">The item.</param>
         /// <returns></returns>
         [HttpPost]
-        public MerchandiseFilter AddItem(MerchandiseFilter item)
+        public ActionResult<MerchandiseFilter> AddItem(MerchandiseFilter item)
         {
             _context.MerchandiseFilter.Add(item);
             _context.SaveChangesAsync();
 
+            if (item.Id == 0)
+                return NotFound();
+            
             return item;
         }
 
@@ -110,7 +113,7 @@ namespace API.Controllers
         [HttpGet("ByMonth/{month}")]
         public IEnumerable<MerchandiseFilter> GetMerchandiseByMonth(int month) 
         {
-            var merchandise = _context.MerchandiseFilter.ToList().Where(x => x.Time.Month == month);
+            var merchandise = _context.MerchandiseFilter.ToList().Where(x => x.DateAndTime.Month == month);
 
             return merchandise;
         }

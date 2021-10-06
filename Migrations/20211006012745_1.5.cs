@@ -4,7 +4,7 @@ using MySql.EntityFrameworkCore.Metadata;
 
 namespace API.Migrations
 {
-    public partial class _12 : Migration
+    public partial class _15 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -15,7 +15,7 @@ namespace API.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
                     Category = table.Column<string>(type: "text", nullable: true),
-                    Time = table.Column<DateTimeOffset>(type: "timestamp", nullable: false),
+                    DateAndTime = table.Column<DateTime>(type: "datetime", nullable: false),
                     NumberRecordsReturned = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -89,7 +89,7 @@ namespace API.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
-                    Uptime = table.Column<TimeSpan>(type: "time", nullable: false),
+                    Uptime = table.Column<long>(type: "bigint", nullable: false),
                     RuntimeVersion = table.Column<string>(type: "text", nullable: true),
                     OSVersion = table.Column<string>(type: "text", nullable: true),
                     DateAndTime = table.Column<DateTime>(type: "datetime", nullable: false)

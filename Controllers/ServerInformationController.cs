@@ -10,7 +10,7 @@ namespace API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ServerInformationController : Controller
+    public class ServerInformationController : ControllerBase
     {
         private readonly ILogger<ServerInformationController> _logger;
         private readonly MetricsDbContext _context;
@@ -53,7 +53,7 @@ namespace API.Controllers
         {
             _context.ServerInformation.Add(serverInformation);
             _context.SaveChangesAsync();
-
+            
             return serverInformation;
         }
 

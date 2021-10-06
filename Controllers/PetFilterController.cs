@@ -61,9 +61,9 @@ namespace API.Controllers
         /// <param name="category">The category.</param>
         /// <returns></returns>
         [HttpGet("ByValue/{Value}")]
-        public IEnumerable<PetFilter> GetCategory(string category)
+        public IEnumerable<PetFilter> GetCategory(string Value)
         {
-            var pets = _context.PetFilter.ToList().Where(x => x.Value == category);
+            var pets = _context.PetFilter.ToList().Where(x => x.Value == Value);
 
             return pets;
         }
