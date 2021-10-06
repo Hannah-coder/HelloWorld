@@ -60,10 +60,18 @@ namespace API.Controllers
         /// </summary>
         /// <param name="category">The category.</param>
         /// <returns></returns>
-        [HttpGet("ByCategory/{category}")]
+        [HttpGet("ByValue/{Value}")]
         public IEnumerable<PetFilter> GetCategory(string category)
         {
-            var pets = _context.PetFilter.ToList().Where(x => x.Category == category);
+            var pets = _context.PetFilter.ToList().Where(x => x.Value == category);
+
+            return pets;
+        }
+
+        [HttpGet("ByCriteria/{filterCriteria}")]
+        public IEnumerable<PetFilter> GetByCriteriaSearch(string criteria)
+        {
+            var pets = _context.PetFilter.ToList().Where(x => x.FilterCriteria == criteria);
 
             return pets;
         }
@@ -108,9 +116,9 @@ namespace API.Controllers
         /// <param name="month">The month.</param>
         /// <returns></returns>
         [HttpGet("ByMonth/{month}")]
-        public IEnumerable<PetFilter> GetPetsByMonth(int month)
+        public IEnumerable<PetFilter> GetPetSearchesByMonth(int month)
         {
-            var pets = _context.PetFilter.ToList().Where(x => x.Time.Month == month);
+            var pets = _context.PetFilter.ToList().Where(x => x.DateAndTime.Month == month);
             
             return pets;
         }

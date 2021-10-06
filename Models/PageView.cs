@@ -5,10 +5,13 @@ using System.Threading.Tasks;
 
 namespace API.Models
 {
-    public record Request
+    public record PageView
     {
         public int Id { get; set; }
         public DateTime DateAndTime { get; set; }
-        public bool Response { get; set; }
+        public string URLSection1 { get; set; }
+        public string URLSection2 { get; set; }
+        public string Parameter1 { get; set; }
+        public string Parameter2 { get; set; }
     }
 }

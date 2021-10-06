@@ -9,8 +9,8 @@ namespace API.Models
     public record Session
     {
         public int Id { get; set; }
-        public DateTimeOffset Start_Time { get; set; }
-        public DateTimeOffset End_Time { get; set; }
+        public DateTime Start { get; set; }
+        public DateTime End { get; set; }
         [JsonIgnore]
         public ICollection<PageSession> PageSessions { get; set; }
     }

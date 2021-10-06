@@ -4,7 +4,7 @@ using MySql.EntityFrameworkCore.Metadata;
 
 namespace API.Migrations
 {
-    public partial class _11 : Migration
+    public partial class _12 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -15,7 +15,8 @@ namespace API.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
                     Category = table.Column<string>(type: "text", nullable: true),
-                    Time = table.Column<DateTimeOffset>(type: "timestamp", nullable: false)
+                    Time = table.Column<DateTimeOffset>(type: "timestamp", nullable: false),
+                    NumberRecordsReturned = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -36,13 +37,32 @@ namespace API.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "PageView",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
+                    DateAndTime = table.Column<DateTime>(type: "datetime", nullable: false),
+                    URLSection1 = table.Column<string>(type: "text", nullable: true),
+                    URLSection2 = table.Column<string>(type: "text", nullable: true),
+                    Parameter1 = table.Column<string>(type: "text", nullable: true),
+                    Parameter2 = table.Column<string>(type: "text", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PageView", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "PetFilter",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
-                    Category = table.Column<string>(type: "text", nullable: true),
-                    Time = table.Column<DateTimeOffset>(type: "timestamp", nullable: false)
+                    Value = table.Column<string>(type: "text", nullable: true),
+                    FilterCriteria = table.Column<string>(type: "text", nullable: true),
+                    DateAndTime = table.Column<DateTime>(type: "datetime", nullable: false),
+                    NumberRecordsReturned = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -55,7 +75,7 @@ namespace API.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
-                    Request_Time = table.Column<DateTimeOffset>(type: "timestamp", nullable: false),
+                    DateAndTime = table.Column<DateTime>(type: "datetime", nullable: false),
                     Response = table.Column<bool>(type: "tinyint(1)", nullable: false)
                 },
                 constraints: table =>
@@ -64,13 +84,29 @@ namespace API.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "ServerInformation",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
+                    Uptime = table.Column<TimeSpan>(type: "time", nullable: false),
+                    RuntimeVersion = table.Column<string>(type: "text", nullable: true),
+                    OSVersion = table.Column<string>(type: "text", nullable: true),
+                    DateAndTime = table.Column<DateTime>(type: "datetime", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ServerInformation", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Session",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
-                    Start_Time = table.Column<DateTimeOffset>(type: "timestamp", nullable: false),
-                    End_Time = table.Column<DateTimeOffset>(type: "timestamp", nullable: false)
+                    Start = table.Column<DateTime>(type: "datetime", nullable: false),
+                    End = table.Column<DateTime>(type: "datetime", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -126,10 +162,16 @@ namespace API.Migrations
                 name: "PageSession");
 
             migrationBuilder.DropTable(
+                name: "PageView");
+
+            migrationBuilder.DropTable(
                 name: "PetFilter");
 
             migrationBuilder.DropTable(
                 name: "Request");
+
+            migrationBuilder.DropTable(
+                name: "ServerInformation");
 
             migrationBuilder.DropTable(
                 name: "Page");

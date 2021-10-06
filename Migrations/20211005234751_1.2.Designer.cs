@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace API.Migrations
 {
     [DbContext(typeof(MetricsDbContext))]
-    [Migration("20211004234846_1.1")]
-    partial class _11
+    [Migration("20211005234751_1.2")]
+    partial class _12
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -27,6 +27,9 @@ namespace API.Migrations
 
                     b.Property<string>("Category")
                         .HasColumnType("text");
+
+                    b.Property<int>("NumberRecordsReturned")
+                        .HasColumnType("int");
 
                     b.Property<DateTimeOffset>("Time")
                         .HasColumnType("timestamp");
@@ -80,17 +83,49 @@ namespace API.Migrations
                     b.ToTable("PageSession");
                 });
 
+            modelBuilder.Entity("API.Models.PageView", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("DateAndTime")
+                        .HasColumnType("datetime");
+
+                    b.Property<string>("Parameter1")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Parameter2")
+                        .HasColumnType("text");
+
+                    b.Property<string>("URLSection1")
+                        .HasColumnType("text");
+
+                    b.Property<string>("URLSection2")
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("PageView");
+                });
+
             modelBuilder.Entity("API.Models.PetFilter", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<string>("Category")
+                    b.Property<DateTime>("DateAndTime")
+                        .HasColumnType("datetime");
+
+                    b.Property<string>("FilterCriteria")
                         .HasColumnType("text");
 
-                    b.Property<DateTimeOffset>("Time")
-                        .HasColumnType("timestamp");
+                    b.Property<int>("NumberRecordsReturned")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Value")
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 
@@ -103,8 +138,8 @@ namespace API.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<DateTimeOffset>("Request_Time")
-                        .HasColumnType("timestamp");
+                    b.Property<DateTime>("DateAndTime")
+                        .HasColumnType("datetime");
 
                     b.Property<bool>("Response")
                         .HasColumnType("tinyint(1)");
@@ -114,17 +149,40 @@ namespace API.Migrations
                     b.ToTable("Request");
                 });
 
+            modelBuilder.Entity("API.Models.ServerInformation", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("DateAndTime")
+                        .HasColumnType("datetime");
+
+                    b.Property<string>("OSVersion")
+                        .HasColumnType("text");
+
+                    b.Property<string>("RuntimeVersion")
+                        .HasColumnType("text");
+
+                    b.Property<TimeSpan>("Uptime")
+                        .HasColumnType("time");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ServerInformation");
+                });
+
             modelBuilder.Entity("API.Models.Session", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<DateTimeOffset>("End_Time")
-                        .HasColumnType("timestamp");
+                    b.Property<DateTime>("End")
+                        .HasColumnType("datetime");
 
-                    b.Property<DateTimeOffset>("Start_Time")
-                        .HasColumnType("timestamp");
+                    b.Property<DateTime>("Start")
+                        .HasColumnType("datetime");
 
                     b.HasKey("Id");
 
@@ -133,7 +191,7 @@ namespace API.Migrations
 
             modelBuilder.Entity("API.Models.PageSession", b =>
                 {
-                    b.HasOne("API.Models.Page", "page")
+                    b.HasOne("API.Models.Page", "Page")
                         .WithMany("PageSessions")
                         .HasForeignKey("PageId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -145,7 +203,7 @@ namespace API.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("page");
+                    b.Navigation("Page");
 
                     b.Navigation("Session");
                 });
