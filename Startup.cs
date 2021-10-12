@@ -36,6 +36,7 @@ namespace API
             });
 
             services.AddHealthChecks(); //Add health check service to query if API is healthy
+            services.AddHealthChecks().AddMySql(Configuration.GetConnectionString("Default")); //Tell MySql Health Check to see if database is reachable
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
