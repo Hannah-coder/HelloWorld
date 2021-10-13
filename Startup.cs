@@ -12,7 +12,11 @@ using Microsoft.OpenApi.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Mime;
+using System.Text.Json;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
+using Microsoft.AspNetCore.Http;
 
 namespace API
 {
@@ -35,8 +39,11 @@ namespace API
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "API", Version = "v1" });
             });
 
-            services.AddHealthChecks(); //Add health check service to query if API is healthy
-            services.AddHealthChecks().AddMySql(Configuration.GetConnectionString("Default")); //Tell MySql Health Check to see if database is reachable
+            services.AddHealthChecks() //Check if API is working correctly
+                .AddMySql(
+                    Configuration.GetConnectionString("Default"),
+                    timeout: TimeSpan.FromSeconds(3), //Set MySql health check timeout to 3 seconds
+                    tags: new []{ "Ready" }); //Register MySql health check under "Ready" endpoint
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -58,7 +65,36 @@ namespace API
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
-                endpoints.MapHealthChecks("/Health"); //Add health check middleware route. This returns API health status.
+
+                endpoints.MapHealthChecks("/Health/Ready", new HealthCheckOptions //Add Ready endpoint to check if MySql database is reachable
+                {
+                    Predicate = (check) => check.Tags.Contains("Ready"), //Only include health checks with the tag "Ready"
+
+                    ResponseWriter = async (context, report) =>
+                    {
+                        var result = JsonSerializer.Serialize(
+                            new
+                            {
+                                status = report.Status.ToString(),
+                                checks = report.Entries.Select(entry => new
+                                {
+                                    name = entry.Key,
+                                    status = entry.Value.Status.ToString(),
+                                    exception = entry.Value.Exception != null ? entry.Value.Exception.Message : "None",
+                                    duration = entry.Value.Duration.ToString()
+                                })
+                            }
+                        );
+
+                        context.Response.ContentType = MediaTypeNames.Application.Json; //Format response as JSON
+                        await context.Response.WriteAsync(result); //Write the response
+                    }
+                });
+
+                endpoints.MapHealthChecks("/Health/Live", new HealthCheckOptions //Add Live endpoint to check if API is running
+                {
+                    Predicate = (_) => false //Exclude every health check including MySql one. Acts like a ping for API service
+                });
             });
         }
     }
