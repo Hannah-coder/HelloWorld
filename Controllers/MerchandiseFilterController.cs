@@ -39,6 +39,16 @@ namespace API.Controllers
             return merchandise;
         }
 
+        [HttpGet("Categories")]
+        public IEnumerable<string> GetDistinctCategories() 
+        {
+            var categorys = from c in _context.MerchandiseFilter
+                            orderby c.Category
+                            select c.Category;
+            
+            return categorys.Distinct().ToList();
+        }
+
         /// <summary>
         /// Gets the item.
         /// </summary>
