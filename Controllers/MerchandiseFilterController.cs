@@ -79,6 +79,27 @@ namespace API.Controllers
         }
 
         /// <summary>
+        /// Deletes the category each time it appears
+        /// </summary>
+        /// <param name="category"></param>
+        /// <returns></returns>
+        [HttpDelete]
+        public ActionResult<MerchandiseFilter> DeleteCategory(string category)
+        {
+            var cat = _context.MerchandiseFilter.ToList().Where(x => x.Category == category);
+            if (cat == null)
+                return NotFound();
+
+            foreach (var item in cat)
+            {
+                _context.MerchandiseFilter.Remove(item);
+                _context.SaveChangesAsync();
+            }
+
+            return null;
+        }
+
+        /// <summary>
         /// Adds the item.
         /// </summary>
         /// <param name="item">The item.</param>
