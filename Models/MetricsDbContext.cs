@@ -21,5 +21,6 @@ namespace API.Models
         public DbSet<PetFilter> PetFilter { get; set; }
         public DbSet<PageView> PageView { get; set; }
         public DbSet<ServerInformation> ServerInformation { get; set; }
+        public DbSet<UserAccounts> UserAccounts { get; set; }
     }
 }
