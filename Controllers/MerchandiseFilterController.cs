@@ -83,7 +83,7 @@ namespace API.Controllers
         /// </summary>
         /// <param name="category"></param>
         /// <returns></returns>
-        [HttpDelete]
+        [HttpDelete("DeleteAll/{category}")]
         public ActionResult<MerchandiseFilter> DeleteCategory(string category)
         {
             var cat = _context.MerchandiseFilter.ToList().Where(x => x.Category == category);
