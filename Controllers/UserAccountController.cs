@@ -23,7 +23,6 @@ namespace API.Controllers
             _context = context;
         }
 
-
         [HttpGet]
         public async Task<List<UserAccounts>> GetUserAccountsAsync()
         {
@@ -39,6 +38,20 @@ namespace API.Controllers
                 return NotFound();
             }
             _context.SaveChangesAsync();
+            return user;
+        }
+
+        [HttpDelete("{id}")]
+        public ActionResult<UserAccounts> DeleteUser(int id)
+        {
+            UserAccounts user = _context.UserAccounts.Single(x => x.UserId == id);
+
+            if (user == null)
+                return NotFound();
+
+            _context.UserAccounts.Remove(user);
+            _context.SaveChangesAsync();
+
             return user;
         }
     }
