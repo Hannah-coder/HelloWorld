@@ -31,20 +31,17 @@ namespace API.Controllers
 
         [HttpPost]
         public ActionResult<UserAccounts> CreateUserAccountAsync(UserAccounts user)
-        {
+        {   
             _context.UserAccounts.Add(user);
-            if(user == null)
-            {
-                return NotFound();
-            }
             _context.SaveChangesAsync();
+            
             return user;
         }
 
         [HttpDelete("{id}")]
         public ActionResult<UserAccounts> DeleteUser(int id)
         {
-            UserAccounts user = _context.UserAccounts.Single(x => x.UserId == id);
+            var user = _context.UserAccounts.Single(x => x.UserId == id);
 
             if (user == null)
                 return NotFound();
