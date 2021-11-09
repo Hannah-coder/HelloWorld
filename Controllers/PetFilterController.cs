@@ -27,7 +27,7 @@ namespace API.Controllers
             _context = context;
         }
 
-        [HttpGet("Value/DistinctValues")]
+        [HttpGet("DistinctValues")]
         public IEnumerable<string> GetDistinctValues()
         {
             var values = from c in _context.PetFilter
@@ -37,7 +37,7 @@ namespace API.Controllers
             return values.Distinct().ToList();
         }
 
-        [HttpGet("Value/DistinctFilterCriteria")]
+        [HttpGet("DistinctFilterCriteria")]
         public IEnumerable<string> GetDistinctFilterCriteria()
         {
             var values = from c in _context.PetFilter
