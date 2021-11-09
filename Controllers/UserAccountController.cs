@@ -62,5 +62,19 @@ namespace API.Controllers
 
             return user;
         }
+
+        [HttpPut]
+        public ActionResult<UserAccounts> UpdateUser(int id)
+        {
+            var user = _context.UserAccounts.Single(x => x.UserId == id);
+
+            if (user == null)
+                return NotFound();
+
+            _context.UserAccounts.Update(user);
+            _context.SaveChangesAsync();
+
+            return user;
+        }
     }
 }
