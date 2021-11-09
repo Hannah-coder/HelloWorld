@@ -29,6 +29,17 @@ namespace API.Controllers
             return await _context.UserAccounts.ToListAsync();
         }
 
+        [HttpGet("{id}")]
+        public ActionResult<UserAccounts> GetUser(int id)
+        {
+            var user = _context.UserAccounts.Single(x => x.UserId == id);
+
+            if (user == null)
+                return NotFound();
+
+            return user;
+        }
+
         [HttpPost]
         public ActionResult<UserAccounts> CreateUserAccountAsync(UserAccounts user)
         {   
