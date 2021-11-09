@@ -37,6 +37,17 @@ namespace API.Controllers
             return values.Distinct().ToList();
         }
 
+        [HttpGet("DistinctBreed")]
+        public IEnumerable<string> GetDistinctBreed()
+        {
+            var values = from c in _context.PetFilter
+                         where c.FilterCriteria == "Breed"
+                         orderby c.Value
+                         select c.Value;
+           
+            return values.Distinct().ToList();
+        }
+
         [HttpGet("DistinctFilterCriteria")]
         public IEnumerable<string> GetDistinctFilterCriteria()
         {
