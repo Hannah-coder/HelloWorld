@@ -27,6 +27,26 @@ namespace API.Controllers
             _context = context;
         }
 
+        [HttpGet("Value/DistinctValues")]
+        public IEnumerable<string> GetDistinctValues()
+        {
+            var values = from c in _context.PetFilter
+                            orderby c.Value
+                            select c.Value;
+
+            return values.Distinct().ToList();
+        }
+
+        [HttpGet("Value/DistinctFilterCriteria")]
+        public IEnumerable<string> GetDistinctFilterCriteria()
+        {
+            var values = from c in _context.PetFilter
+                         orderby c.FilterCriteria
+                         select c.FilterCriteria;
+
+            return values.Distinct().ToList();
+        }
+
         /// <summary>
         /// Gets the pets.
         /// </summary>
