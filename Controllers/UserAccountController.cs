@@ -64,14 +64,18 @@ namespace API.Controllers
         }
 
         [HttpPut]
-        public ActionResult<UserAccounts> UpdateUser(int id)
+        public ActionResult<UserAccounts> UpdateUser(UserAccounts user)
         {
-            var user = _context.UserAccounts.Single(x => x.UserId == id);
+            var specUser = _context.UserAccounts.Single(x => x.UserId == user.UserId);
 
-            if (user == null)
+            if (specUser == null)
                 return NotFound();
 
-            _context.UserAccounts.Update(user);
+            specUser.UserUserName = user.UserUserName;
+            specUser.UserRole = user.UserRole;
+            specUser.UserEmail = user.UserEmail;
+
+            _context.UserAccounts.Update(specUser);
             _context.SaveChangesAsync();
 
             return user;
