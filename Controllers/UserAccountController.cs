@@ -74,6 +74,7 @@ namespace API.Controllers
             specUser.UserUserName = user.UserUserName;
             specUser.UserRole = user.UserRole;
             specUser.UserEmail = user.UserEmail;
+            specUser.UserPassword = user.UserPassword;
 
             _context.UserAccounts.Update(specUser);
             _context.SaveChangesAsync();
