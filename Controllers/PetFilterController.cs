@@ -58,6 +58,17 @@ namespace API.Controllers
             return values.Distinct().ToList();
         }
 
+        [HttpGet("DistinctFilterAge")]
+        public IEnumerable<string> GetDistinctFilterAge()
+        {
+            var values = from c in _context.PetFilter
+                         where c.FilterCriteria == "Age"
+                         orderby c.FilterCriteria
+                         select c.FilterCriteria;
+
+            return values.Distinct().ToList();
+        }
+
         /// <summary>
         /// Gets the pets.
         /// </summary>
