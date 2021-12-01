@@ -63,8 +63,8 @@ namespace API.Controllers
         {
             var values = from c in _context.PetFilter
                          where c.FilterCriteria == "Age"
-                         orderby c.FilterCriteria
-                         select c.FilterCriteria;
+                         orderby c.Value
+                         select c.Value;
 
             return values.Distinct().ToList();
         }
