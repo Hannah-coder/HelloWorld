@@ -36,6 +36,14 @@ namespace API.Controllers
             
             return pages;
         }
+        
+        [HttpGet("Distinct")]
+        public IEnumerable<Page> GetDistinctPages()
+        {
+            var pages = _context.Page.ToList();
+
+            return pages.Distinct();
+        }
 
         /// <summary>
         /// Gets the page.
