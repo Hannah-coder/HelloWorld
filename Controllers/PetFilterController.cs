@@ -98,11 +98,11 @@ namespace API.Controllers
 
             return pets;
         }
-
+        
         [HttpGet("ByCriteria/{FilterCriteria}")]
-        public IEnumerable<PetFilter> GetByCriteriaSearch(string FilterCriteria)
+        public IEnumerable<PetFilter> GetByCriteriaSearch(string Criteria)
         {
-            var pets = _context.PetFilter.ToList().Where(x => x.FilterCriteria == FilterCriteria);
+            var pets = _context.PetFilter.ToList().Where(x => x.FilterCriteria == Criteria);
 
             return pets;
         }
