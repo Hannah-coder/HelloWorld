@@ -23,6 +23,7 @@ namespace API.Controllers
         /// <param name="context">The context.</param>
         public PageViewController(ILogger<PageViewController> logger, MetricsDbContext context)
         {
+        //demo change
             _logger = logger;
             _context = context;
         }
