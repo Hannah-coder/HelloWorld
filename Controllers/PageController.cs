@@ -42,7 +42,7 @@ namespace API.Controllers
         {
             var pages = _context.Page.ToList();
 
-            return pages.Distinct();
+            return pages;
         }
 
         /// <summary>
